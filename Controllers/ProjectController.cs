@@ -8,7 +8,7 @@ using bigmojo.net.capacity.api.model;
 namespace react.Controllers
 {
     [Route("api/[controller]")]
-    public class PersonController : Controller
+    public class ProjectController : Controller
     {
 
 
@@ -20,18 +20,22 @@ namespace react.Controllers
         }
 
         [HttpPost]
-        public string TestPost()
+        public string TestPost([ FromBody] Project project)
         {
-            return "posted";
+             if (ModelState.IsValid)
+            {
+                return "posted project:"+project.firstName;
+            }
+
+            return "bad project:";
 
         }
 
 
-        [HttpGet("{id}", Name = "GetPerson")]
-        public Microsoft.AspNetCore.Mvc.JsonResult GetById(string id)
+        [HttpGet("{id}", Name = "GetProject")]
+        public string GetById(string id)
         {
-            return Json(new Person{firstName="bill"});
-            
+            return "hi";            
 
         }
 

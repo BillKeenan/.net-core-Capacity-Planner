@@ -23,6 +23,7 @@ namespace react
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvcCore().AddDataAnnotations().AddJsonFormatters();
             services.AddRouteAnalyzer(); // Add
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
