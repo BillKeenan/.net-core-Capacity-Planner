@@ -15,6 +15,11 @@ namespace bigmojo.net.capacity.api.ViewModel{
             firstName = vm.firstName,
             lastName = vm.lastName,
         };
+        public static implicit operator ProjectViewModel(Project vm) => new ProjectViewModel
+        {
+            firstName = vm.firstName,
+            lastName = vm.lastName,
+        };
 
     }
 }

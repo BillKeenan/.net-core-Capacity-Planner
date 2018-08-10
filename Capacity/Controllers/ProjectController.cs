@@ -17,14 +17,43 @@ namespace react.Controllers
 
 
         [HttpGet]
-        public string Test()
+        public ProjectViewModel[] GetProjects()
         {
-            return "hi there";
+
+             List<ProjectViewModel> vms = new List<ProjectViewModel>();
+
+            using (IDocumentStore store = new DocumentStore
+            {
+                Urls = new[]                        // URL to the Server,
+                {                                   // or list of URLs 
+                    "http://127.0.0.1:8080"  // to all Cluster Servers (Nodes)
+                },
+                Database = "capacity",             // Default database that DocumentStore will interact with
+            })
+            {
+            store.Initialize();     
+                        // Each DocumentStore needs to be initialized before use.
+                using (IDocumentSession session = store.OpenSession())  // Open a session for a default 'Database'
+                {
+                   
+                    List<Project> projectsx = session
+                        .Query<Project>()
+                        .ToList();                       // Send to the Server
+                               
+                    Console.Write("got projects:"+projectsx.Count);
+                    projectsx.ForEach(delegate (Project proj)
+                    {
+                        vms.Add(proj);
+                    });                                                             // one request processed in one transaction
+                }
+            }
+
+            return vms.ToArray();
 
         }
 
         [HttpPost]
-        public string TestPost([ FromBody] ProjectViewModel project)
+        public string SaveProject([ FromBody] ProjectViewModel project)
         {
              if (ModelState.IsValid)
             {
@@ -46,14 +75,14 @@ namespace react.Controllers
                 using (IDocumentSession session = store.OpenSession())  // Open a session for a default 'Database'
                 {
                    
-                    session.Store(project);                            // Assign an 'Id' and collection (Categories)
+                    session.Store(modelModel);                            // Assign an 'Id' and collection (Categories)
                                                                         // and start tracking an entity
 
                     session.SaveChanges();                              // Send to the Server
                                                                         // one request processed in one transaction
                 }
             }
-              return "posted project:"+project.firstName;
+              return "posted project:"+modelModel.firstName;
             }
 
             return "bad project:";

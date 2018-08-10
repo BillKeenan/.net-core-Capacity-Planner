@@ -9,16 +9,32 @@ export class Project extends Component {
     this.incrementCounter = this.incrementCounter.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-                    input: {
-                        firstName: "",
-                        lastName: ""
-                    },
-                    blurred: {
-                      firstName: false,
-                      lastName: false
-                    }
-                  };
+    this.addProject = this.addProject.bind(this);
+    
+    if (String(this.props.location.pathname) === "/project/create"){
+
+      this.state = {
+        input: {
+            firstName: "",
+            lastName: ""
+        },
+        blurred: {
+          firstName: false,
+          lastName: false
+        }
+      };
+    }else{
+      this.state = {
+        projects:[]
+      };
+
+      fetch('api/Project')
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ projects: data, loading: false });
+        });
+
+    }
 
   }
 
@@ -36,6 +52,30 @@ export class Project extends Component {
     })
   }
 
+  addProject(){
+
+    var project = {
+      firstName: 'yourValue with long nmae',
+      lastName: 'yourOtherValue',
+    };
+
+    (async () => {
+      const rawResponse = await fetch('api/Project', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(project)
+      });
+      const content = await rawResponse.json();
+      this.setState(prevState => ({
+        projects: [...prevState.projects, project]
+      }))
+    })();
+    
+  }
+
   handleInputChange(newPartialInput) {
     this.setState(state => ({
         ...state,
@@ -50,6 +90,7 @@ export class Project extends Component {
     this.setState({value: event.target.value});
   }
 
+  
   handleSubmit(event) {
     alert('A project was submitted: ' + this.state.input.firstName + ':'+this.state.input.lastName);
     event.preventDefault();
@@ -66,38 +107,37 @@ export class Project extends Component {
     })
   }
 
+  
+
   render() {
     if (String(this.props.location.pathname) === "/project/create"){
       return this.renderForm();
     }else{
 
-      var ProperListRender = React.createClass({displayName: "ProperListRender",
-        render: function() {
-          return (
-            React.createElement("ul", null,
-              this.props.list.map(function(listValue){
-                return React.createElement("li", null, listValue);
-              })
-            )
-          )
-        }
-      });
-      React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5]}), document.getElementById('proper-list-render1'));
-      React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5,6,7,8,9,10]}), document.getElementById('proper-list-render2'));
-      
+      const data =[{"name":"test1"},{"name":"test2"}];
       return (
+        <div>
+      <div>
+      {this.state.projects.map(function(d, idx){
+         return (<li key={idx}>{d.firstName}: {d.lastName}</li>)
+       })}
+      </div>
         <div>
           <h1>Counter</h1>
           <p>This is a simple example of a React component.</p>
           <p>Current count: <strong>{this.state.currentCount}</strong></p>
-          <button onClick={this.incrementCounter}>Increment</button>
+          <button onClick={this.addProject}>Increment</button>
+        </div>
         </div>
       );
     }
   }
 
   componentDidMount(){
+    if (String(this.props.location.pathname) === "/project/create"){
+
     this.firstName.focus();
+    }
   }
   handleBlur(fieldName) {
     this.setState(state => ({

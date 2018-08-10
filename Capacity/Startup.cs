@@ -31,6 +31,7 @@ namespace react
                 configuration.RootPath = "ClientApp/build";
             });
 
+            //services.AddSingleton(DocumentStoreHolder.Store);
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
