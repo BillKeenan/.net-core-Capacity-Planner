@@ -70,6 +70,21 @@ export class Project extends Component {
     if (String(this.props.location.pathname) === "/project/create"){
       return this.renderForm();
     }else{
+
+      var ProperListRender = React.createClass({displayName: "ProperListRender",
+        render: function() {
+          return (
+            React.createElement("ul", null,
+              this.props.list.map(function(listValue){
+                return React.createElement("li", null, listValue);
+              })
+            )
+          )
+        }
+      });
+      React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5]}), document.getElementById('proper-list-render1'));
+      React.render(React.createElement(ProperListRender, {list: [1,2,3,4,5,6,7,8,9,10]}), document.getElementById('proper-list-render2'));
+      
       return (
         <div>
           <h1>Counter</h1>
@@ -150,4 +165,8 @@ export class Project extends Component {
 
     
   }
+
+  
+
+  
 }
