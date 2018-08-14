@@ -20,9 +20,25 @@ namespace react.Controllers
         }
 
         [HttpPost]
-        public string TestPost()
-        {
-            return "posted";
+        public string SaveProject ([FromBody] PersonViewModel personViewModel) {
+            if (ModelState.IsValid) {
+
+                Person modelModel = personViewModel;
+
+                // Each DocumentStore needs to be initialized before use.
+                using (IDocumentSession session = DocumentStoreHolder.Store.OpenSession ()) // Open a session for a default 'Database'
+                {
+
+                    session.Store (modelModel); // Assign an 'Id' and collection (Categories)
+                    // and start tracking an entity
+
+                    session.SaveChanges (); // Send to the Server
+                    // one request processed in one transaction
+                }
+                return "posted project:" + modelModel.name;
+            }
+
+            return "bad project:";
 
         }
 
