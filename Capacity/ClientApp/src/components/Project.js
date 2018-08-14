@@ -24,19 +24,20 @@ export class Project extends Component {
         }
       };
     }else{
-      this.state = {
-        projects:[]
-      };
+      
+      this.state = {projects: [], loading: true, }
 
       fetch('api/Project')
         .then(response => response.json())
         .then(data => {
-          this.setState({ projects: data, loading: false });
+          this.setState({ projects: data, loading: false, });
         });
 
     }
 
   }
+
+
 
   incrementCounter() {
     fetch('api/Project', {
@@ -55,8 +56,7 @@ export class Project extends Component {
   addProject(){
 
     var project = {
-      firstName: 'yourValue with long nmae',
-      lastName: 'yourOtherValue',
+      name: 'Test Project'
     };
 
     (async () => {
@@ -101,33 +101,36 @@ export class Project extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstName: this.state.input.firstName,
-        lastName: this.state.input.lastName,
+        firstName: this.state.input.name
       })
     })
   }
 
-  
 
   render() {
-    if (String(this.props.location.pathname) === "/project/create"){
-      return this.renderForm();
+    // like this https://reactjs.org/docs/thinking-in-react.html
+    if (this.state.loading ){
+      return (<div>loading</div>);
     }else{
+      var projectHTML = this.state.projects.map(function(d, idx){
+        return <tr>
+        <td key={idx}>{d.name}</td> <ProjectCapacity project={d.name}/>
+        </tr>
+      },this);
 
-      const data =[{"name":"test1"},{"name":"test2"}];
       return (
-        <div>
       <div>
-      {this.state.projects.map(function(d, idx){
-         return (<li key={idx}>{d.firstName}: {d.lastName}</li>)
-       })}
-      </div>
         <div>
-          <h1>Counter</h1>
-          <p>This is a simple example of a React component.</p>
-          <p>Current count: <strong>{this.state.currentCount}</strong></p>
-          <button onClick={this.addProject}>Increment</button>
+          <table>
+          {projectHTML}
+        </table>
         </div>
+          <div>
+            <h1>Counter</h1>
+            <p>This is a simple example of a React component.</p>
+            <p>Current count: <strong>{this.state.currentCount}</strong></p>
+            <button onClick={this.addProject}>Increment</button>
+          </div>
         </div>
       );
     }
@@ -136,7 +139,7 @@ export class Project extends Component {
   componentDidMount(){
     if (String(this.props.location.pathname) === "/project/create"){
 
-    this.firstName.focus();
+    this.Name.focus();
     }
   }
   handleBlur(fieldName) {
@@ -152,14 +155,9 @@ export class Project extends Component {
     const errors = {};
     const {input} = this.state;
     
-    if (!input.firstName || input.firstName.length<10) {
-        errors.firstName = 'firstName is required and must be at least 10 characters  ';
+    if (!input.name || input.name.length<10) {
+        errors.name = 'Name is required and must be at least 10 characters  ';
     } 
-
-    if (!input.lastName) {
-        errors.lastName = 'lastName is required';
-    }
-
     return {
         errors,
         isValid: Object.keys(errors).length === 0
@@ -174,29 +172,18 @@ export class Project extends Component {
       <form onSubmit={this.handleSubmit}>
         <div>
           <label>
-          firstName:
+          Name:
             <input 
-              name="firstName" 
-              ref={(input) => { this.firstName = input; }} 
-              onBlur={() => this.handleBlur('firstName')}
-              type="text" value={input.firstName} 
-              onChange={e => this.handleInputChange({firstName: e.target.value})} 
+              name="Name" 
+              ref={(input) => { this.name = input; }} 
+              onBlur={() => this.handleBlur('name')}
+              type="text" value={input.name} 
+              onChange={e => this.handleInputChange({name: e.target.value})} 
             />
           </label>
-          {blurred.firstName && !!errors.firstName && <span>{errors.firstName}</span>}
+          {blurred.name && !!errors.name && <span>{errors.name}</span>}
         </div>
-        <div>
-          <label>
-          lastName:
-          <input 
-              name="lastName" 
-              onBlur={() => this.handleBlur('lastName')}
-              type="text" value={input.lastName} 
-              onChange={e => this.handleInputChange({lastName: e.target.value})} 
-            />
-          </label>
-          {blurred.lastName && !!errors.lastName && <span>{errors.lastName}</span>}
-        </div>
+        
         <button type="submit" disabled={!isValid}>
                         Submit
                     </button>
@@ -206,7 +193,34 @@ export class Project extends Component {
     
   }
 
-  
-
-  
 }
+
+
+export class ProjectCapacity extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = { capacity: [], loading: true };
+
+    var prj = props.project;
+
+          fetch('api/Capacity/'+prj)
+            .then(response => response.json())
+            .then(data => {
+              this.setState({ capacity: data, loading: false, });
+          });
+  }
+
+  render() {
+
+    if (this.state.loading){
+      return ( "loading" );
+    }
+      return(
+        this.state.capacity.map(function(d, idx){
+          return <td>{d}</td>
+        },this)
+        );
+    }
+  }

@@ -1,24 +1,17 @@
-using System.ComponentModel.DataAnnotations ;
+using System.ComponentModel.DataAnnotations;
 using bigmojo.net.capacity.api.Model;
 
-namespace bigmojo.net.capacity.api.ViewModel{
-    public class ProjectViewModel
-    {
+namespace bigmojo.net.capacity.api.ViewModel {
+    public class ProjectViewModel {
         [Required]
-        [MinLength(10)]
-        public string firstName {get; set;}
-        public string lastName  {get; set;}
+        [MinLength (5)]
+        public string name { get; set; }
 
-
-        public static implicit operator Project(ProjectViewModel vm) => new Project
-        {
-            firstName = vm.firstName,
-            lastName = vm.lastName,
+        public static implicit operator Project (ProjectViewModel vm) => new Project {
+            name = vm.name,
         };
-        public static implicit operator ProjectViewModel(Project vm) => new ProjectViewModel
-        {
-            firstName = vm.firstName,
-            lastName = vm.lastName,
+        public static implicit operator ProjectViewModel (Project vm) => new ProjectViewModel {
+            name = vm.name,
         };
 
     }
