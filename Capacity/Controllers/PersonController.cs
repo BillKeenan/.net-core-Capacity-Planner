@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bigmojo.net.capacity.api.model;
+using bigmojo.net.capacity.api.Model;
+using bigmojo.net.capacity.api.ViewModel;
+using Raven.Client.Documents.Session;
+using bigmojo.net.capacity.Services;
 
 namespace react.Controllers
 {
@@ -20,7 +23,7 @@ namespace react.Controllers
         }
 
         [HttpPost]
-        public string SaveProject ([FromBody] PersonViewModel personViewModel) {
+        public IActionResult SavePerson ([FromBody] PersonViewModel personViewModel) {
             if (ModelState.IsValid) {
 
                 Person modelModel = personViewModel;
@@ -35,10 +38,10 @@ namespace react.Controllers
                     session.SaveChanges (); // Send to the Server
                     // one request processed in one transaction
                 }
-                return "posted project:" + modelModel.name;
+                return Ok();
             }
 
-            return "bad project:";
+            return BadRequest("bad person");
 
         }
 

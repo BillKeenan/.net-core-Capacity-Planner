@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bigmojo.net.capacity.api.model;
 using bigmojo.net.capacity.api.Model;
 using bigmojo.net.capacity.api.ViewModel;
 using bigmojo.net.capacity.Services;

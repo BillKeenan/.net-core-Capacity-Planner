@@ -10,30 +10,14 @@ export class Project extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addProject = this.addProject.bind(this);
-    
-    if (String(this.props.location.pathname) === "/project/create"){
+  
+    this.state = {projects: [], loading: true, }
 
-      this.state = {
-        input: {
-            firstName: "",
-            lastName: ""
-        },
-        blurred: {
-          firstName: false,
-          lastName: false
-        }
-      };
-    }else{
-      
-      this.state = {projects: [], loading: true, }
-
-      fetch('api/Project')
-        .then(response => response.json())
-        .then(data => {
-          this.setState({ projects: data, loading: false, });
-        });
-
-    }
+    fetch('api/Project')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ projects: data, loading: false, });
+      });
 
   }
 
