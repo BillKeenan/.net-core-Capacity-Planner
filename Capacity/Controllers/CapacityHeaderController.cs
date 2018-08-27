@@ -12,19 +12,24 @@ using Raven.Client.Documents.Session;
 
 namespace react.Controllers {
     [Route ("api/[controller]")]
-    public class CapacityController : Controller {
+    public class CapacityHeaderController : Controller {
         private readonly ICapacity capcityService;
 
-        public CapacityController(ICapacity capcityService){
+        public CapacityHeaderController(ICapacity capcityService){
             this.capcityService = capcityService;
         }
 
-        
-        [HttpGet ("{id}/{start}/{count}", Name = "GetCapacity")]
-        public int[] GetCapacity (string id,int start,int count) {
+        [HttpGet ("{start}/{count}", Name = "GetCapacityHeader")]
+        public string[] GetCapacityHeader (int start,int count) {
 
-            return capcityService.GetCapacity(start,count,new Project{name=id});
+            var day1 = Utility.FirstDateOfWeekISO8601(DateTime.Now.Year,start);
 
+            var dates = new List<String>();
+            for (var i = 0; i <= count; i++){
+                dates.Add(day1.AddDays(7 * i).ToShortDateString());
+            }
+
+            return dates.ToArray();
         }
 
     }

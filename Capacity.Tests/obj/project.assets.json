@@ -956,6 +956,15 @@
           "lib/netstandard1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {}
         }
       },
+      "Microsoft.CompilerServices.AsyncTargetingPack/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.5.0": {
         "type": "package",
         "compile": {
@@ -963,6 +972,86 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "Microsoft.Data.Edm/5.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Data.Edm.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Data.Edm.dll": {}
+        },
+        "resource": {
+          "lib/net40/de/Microsoft.Data.Edm.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net40/es/Microsoft.Data.Edm.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net40/fr/Microsoft.Data.Edm.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net40/it/Microsoft.Data.Edm.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net40/ja/Microsoft.Data.Edm.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net40/ko/Microsoft.Data.Edm.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net40/ru/Microsoft.Data.Edm.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net40/zh-Hans/Microsoft.Data.Edm.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/net40/zh-Hant/Microsoft.Data.Edm.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      },
+      "Microsoft.Data.OData/5.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Data.Edm": "[5.2.0]",
+          "System.Spatial": "[5.2.0]"
+        },
+        "compile": {
+          "lib/net40/Microsoft.Data.OData.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Data.OData.dll": {}
+        },
+        "resource": {
+          "lib/net40/de/Microsoft.Data.OData.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net40/es/Microsoft.Data.OData.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net40/fr/Microsoft.Data.OData.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net40/it/Microsoft.Data.OData.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net40/ja/Microsoft.Data.OData.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net40/ko/Microsoft.Data.OData.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net40/ru/Microsoft.Data.OData.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net40/zh-Hans/Microsoft.Data.OData.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/net40/zh-Hant/Microsoft.Data.OData.resources.dll": {
+            "locale": "zh-Hant"
+          }
         }
       },
       "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
@@ -1874,6 +1963,15 @@
           }
         }
       },
+      "Microsoft.WindowsAzure.ConfigurationManager/1.8.0": {
+        "type": "package",
+        "compile": {
+          "lib/net35-full/Microsoft.WindowsAzure.Configuration.dll": {}
+        },
+        "runtime": {
+          "lib/net35-full/Microsoft.WindowsAzure.Configuration.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.3": {
         "type": "package",
         "dependencies": {
@@ -1930,6 +2028,38 @@
         "runtime": {
           "lib/netcoreapp2.1/Raven.Client.dll": {},
           "lib/netcoreapp2.1/Sparrow.dll": {}
+        }
+      },
+      "RavenDB.Database/2.5.25033": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CompilerServices.AsyncTargetingPack": "1.0.0",
+          "Microsoft.Data.Edm": "5.2.0",
+          "Microsoft.Data.OData": "5.2.0",
+          "Microsoft.WindowsAzure.ConfigurationManager": "1.8.0",
+          "System.Spatial": "5.2.0",
+          "WindowsAzure.Storage": "2.0.0"
+        },
+        "compile": {
+          "lib/net45/Raven.Abstractions.dll": {},
+          "lib/net45/Raven.Database.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Raven.Abstractions.dll": {},
+          "lib/net45/Raven.Database.dll": {}
+        }
+      },
+      "RavenDB.TestDriver/4.0.6": {
+        "type": "package",
+        "dependencies": {
+          "RavenDB.Client": "4.0.6",
+          "System.Runtime.Loader": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Raven.TestDriver.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Raven.TestDriver.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -2999,12 +3129,12 @@
           }
         }
       },
-      "System.Runtime.Loader/4.0.0": {
+      "System.Runtime.Loader/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Reflection": "4.1.0",
-          "System.Runtime": "4.1.0"
+          "System.IO": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Runtime": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.5/System.Runtime.Loader.dll": {}
@@ -3342,6 +3472,44 @@
           }
         }
       },
+      "System.Spatial/5.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/System.Spatial.dll": {}
+        },
+        "runtime": {
+          "lib/net40/System.Spatial.dll": {}
+        },
+        "resource": {
+          "lib/net40/de/System.Spatial.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net40/es/System.Spatial.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net40/fr/System.Spatial.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net40/it/System.Spatial.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net40/ja/System.Spatial.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net40/ko/System.Spatial.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net40/ru/System.Spatial.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net40/zh-Hans/System.Spatial.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/net40/zh-Hant/System.Spatial.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      },
       "System.Text.Encoding/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -3664,6 +3832,19 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        }
+      },
+      "WindowsAzure.Storage/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Data.OData": "5.0.2",
+          "Microsoft.WindowsAzure.ConfigurationManager": "1.7.0"
+        },
+        "compile": {
+          "lib/net40/Microsoft.WindowsAzure.Storage.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
       "xunit/2.3.1": {
@@ -4516,6 +4697,20 @@
         "microsoft.codecoverage.nuspec"
       ]
     },
+    "Microsoft.CompilerServices.AsyncTargetingPack/1.0.0": {
+      "sha512": "Ajaty7QeOL0mXeD/hxVIjUZnsj05USgFjaLg5Dutz0X9e1MRWUDyKEMPtA3OhDsdLJnxgEzb1Ep7sihadTZ0Ww==",
+      "type": "package",
+      "path": "microsoft.compilerservices.asynctargetingpack/1.0.0",
+      "files": [
+        "lib/net40/Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll",
+        "lib/net40/Microsoft.CompilerServices.AsyncTargetingPack.Net4.xml",
+        "lib/net45/Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll",
+        "lib/sl50/Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5.dll",
+        "lib/sl50/Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5.xml",
+        "microsoft.compilerservices.asynctargetingpack.1.0.0.nupkg.sha512",
+        "microsoft.compilerservices.asynctargetingpack.nuspec"
+      ]
+    },
     "Microsoft.CSharp/4.5.0": {
       "sha512": "EGoBmf3Na2ppbhPePDE9PlX81r1HuOZH5twBrq7couJZiPTjUnD3648balerQJO6EJ8Sj+43+XuRwQ7r+3tE3w==",
       "type": "package",
@@ -4581,6 +4776,68 @@
         "ref/xamarinwatchos10/_._",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Microsoft.Data.Edm/5.2.0": {
+      "sha512": "48Mgg3kSFwfZ3axemz1glGkHvHsDdPqHNV48Z4mUvfA9K00xiEqAaE6mlbMszkRIQyt3EWLfeXrK5MY9WqQp4A==",
+      "type": "package",
+      "path": "microsoft.data.edm/5.2.0",
+      "files": [
+        "lib/net40/Microsoft.Data.Edm.dll",
+        "lib/net40/Microsoft.Data.Edm.xml",
+        "lib/net40/de/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/es/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/fr/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/it/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/ja/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/ko/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/ru/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/zh-Hans/Microsoft.Data.Edm.resources.dll",
+        "lib/net40/zh-Hant/Microsoft.Data.Edm.resources.dll",
+        "lib/sl4/Microsoft.Data.Edm.SL.dll",
+        "lib/sl4/Microsoft.Data.Edm.SL.xml",
+        "lib/sl4/de/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/es/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/fr/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/it/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/ja/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/ko/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/ru/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/zh-Hans/Microsoft.Data.Edm.SL.resources.dll",
+        "lib/sl4/zh-Hant/Microsoft.Data.Edm.SL.resources.dll",
+        "microsoft.data.edm.5.2.0.nupkg.sha512",
+        "microsoft.data.edm.nuspec"
+      ]
+    },
+    "Microsoft.Data.OData/5.2.0": {
+      "sha512": "gxiUPnPdrl6LV251KtnqrkwQDeBI0g7a+YWfd6J2ANXxLJq0N+Z88gWOQ1yowURzbNWBu2EsffC4qJoEQaaLfA==",
+      "type": "package",
+      "path": "microsoft.data.odata/5.2.0",
+      "files": [
+        "lib/net40/Microsoft.Data.OData.dll",
+        "lib/net40/Microsoft.Data.OData.xml",
+        "lib/net40/de/Microsoft.Data.OData.resources.dll",
+        "lib/net40/es/Microsoft.Data.OData.resources.dll",
+        "lib/net40/fr/Microsoft.Data.OData.resources.dll",
+        "lib/net40/it/Microsoft.Data.OData.resources.dll",
+        "lib/net40/ja/Microsoft.Data.OData.resources.dll",
+        "lib/net40/ko/Microsoft.Data.OData.resources.dll",
+        "lib/net40/ru/Microsoft.Data.OData.resources.dll",
+        "lib/net40/zh-Hans/Microsoft.Data.OData.resources.dll",
+        "lib/net40/zh-Hant/Microsoft.Data.OData.resources.dll",
+        "lib/sl4/Microsoft.Data.OData.SL.dll",
+        "lib/sl4/Microsoft.Data.OData.SL.xml",
+        "lib/sl4/de/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/es/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/fr/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/it/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/ja/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/ko/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/ru/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/zh-Hans/Microsoft.Data.OData.SL.resources.dll",
+        "lib/sl4/zh-Hant/Microsoft.Data.OData.SL.resources.dll",
+        "microsoft.data.odata.5.2.0.nupkg.sha512",
+        "microsoft.data.odata.nuspec"
       ]
     },
     "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
@@ -5622,6 +5879,16 @@
         "version.txt"
       ]
     },
+    "Microsoft.WindowsAzure.ConfigurationManager/1.8.0": {
+      "sha512": "a6b+9C3kZ3YtyqlxDfMSEYnqARFpr/BQcCqZFCgqBAEHDUZNr2/GOL9gC2gialM0SMOSJ5PXic4NirF19HtMwQ==",
+      "type": "package",
+      "path": "microsoft.windowsazure.configurationmanager/1.8.0",
+      "files": [
+        "lib/net35-full/Microsoft.WindowsAzure.Configuration.dll",
+        "microsoft.windowsazure.configurationmanager.1.8.0.nupkg.sha512",
+        "microsoft.windowsazure.configurationmanager.nuspec"
+      ]
+    },
     "NETStandard.Library/2.0.3": {
       "sha512": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "type": "package",
@@ -5803,6 +6070,90 @@
         "lib/netstandard2.0/Sparrow.dll",
         "ravendb.client.4.0.6.nupkg.sha512",
         "ravendb.client.nuspec"
+      ]
+    },
+    "RavenDB.Database/2.5.25033": {
+      "sha512": "BGCV2E8V8yQ1znLEaDrPRLHUs5scmCqQv93NZXNPThnCdtal8O5XBuf2yheAB+PZUWsuSIbRAdK2IkG5Qjj2uw==",
+      "type": "package",
+      "path": "ravendb.database/2.5.25033",
+      "files": [
+        ".signature.p7s",
+        "lib/net40/AWS.Extensions.dll",
+        "lib/net40/AWS.Extensions.xml",
+        "lib/net40/AWSSDK.dll",
+        "lib/net40/AWSSDK.xml",
+        "lib/net40/Esent.Interop.dll",
+        "lib/net40/Esent.Interop.pdb",
+        "lib/net40/Esent.Interop.xml",
+        "lib/net40/GeoAPI.dll",
+        "lib/net40/ICSharpCode.NRefactory.CSharp.dll",
+        "lib/net40/ICSharpCode.NRefactory.CSharp.xml",
+        "lib/net40/ICSharpCode.NRefactory.dll",
+        "lib/net40/ICSharpCode.NRefactory.xml",
+        "lib/net40/Jint.Raven.dll",
+        "lib/net40/Jint.Raven.pdb",
+        "lib/net40/Lucene.Net.Contrib.Spatial.NTS.dll",
+        "lib/net40/Lucene.Net.Contrib.Spatial.NTS.pdb",
+        "lib/net40/Lucene.Net.Contrib.Spatial.NTS.xml",
+        "lib/net40/Lucene.Net.dll",
+        "lib/net40/Lucene.Net.pdb",
+        "lib/net40/Lucene.Net.xml",
+        "lib/net40/Mono.Cecil.dll",
+        "lib/net40/NetTopologySuite.dll",
+        "lib/net40/PowerCollections.dll",
+        "lib/net40/Raven.Abstractions.dll",
+        "lib/net40/Raven.Abstractions.pdb",
+        "lib/net40/Raven.Abstractions.xml",
+        "lib/net40/Raven.Database.dll",
+        "lib/net40/Raven.Database.pdb",
+        "lib/net40/Spatial4n.Core.NTS.dll",
+        "lib/net40/Spatial4n.Core.NTS.pdb",
+        "lib/net40/Spatial4n.Core.NTS.xml",
+        "lib/net45/AWS.Extensions.dll",
+        "lib/net45/AWS.Extensions.xml",
+        "lib/net45/AWSSDK.dll",
+        "lib/net45/AWSSDK.xml",
+        "lib/net45/Esent.Interop.dll",
+        "lib/net45/Esent.Interop.pdb",
+        "lib/net45/Esent.Interop.xml",
+        "lib/net45/GeoAPI.dll",
+        "lib/net45/ICSharpCode.NRefactory.CSharp.dll",
+        "lib/net45/ICSharpCode.NRefactory.CSharp.xml",
+        "lib/net45/ICSharpCode.NRefactory.dll",
+        "lib/net45/ICSharpCode.NRefactory.xml",
+        "lib/net45/Jint.Raven.dll",
+        "lib/net45/Jint.Raven.pdb",
+        "lib/net45/Lucene.Net.Contrib.Spatial.NTS.dll",
+        "lib/net45/Lucene.Net.Contrib.Spatial.NTS.pdb",
+        "lib/net45/Lucene.Net.Contrib.Spatial.NTS.xml",
+        "lib/net45/Lucene.Net.dll",
+        "lib/net45/Lucene.Net.pdb",
+        "lib/net45/Lucene.Net.xml",
+        "lib/net45/Mono.Cecil.dll",
+        "lib/net45/NetTopologySuite.dll",
+        "lib/net45/PowerCollections.dll",
+        "lib/net45/Raven.Abstractions.dll",
+        "lib/net45/Raven.Abstractions.pdb",
+        "lib/net45/Raven.Abstractions.xml",
+        "lib/net45/Raven.Database.dll",
+        "lib/net45/Raven.Database.pdb",
+        "lib/net45/Spatial4n.Core.NTS.dll",
+        "lib/net45/Spatial4n.Core.NTS.pdb",
+        "lib/net45/Spatial4n.Core.NTS.xml",
+        "ravendb.database.2.5.25033.nupkg.sha512",
+        "ravendb.database.nuspec"
+      ]
+    },
+    "RavenDB.TestDriver/4.0.6": {
+      "sha512": "8UCzkBWdHQZHbDclNewmJqKdtmWV1mz1tPNKtSHEH/k9b5Dq85mXcnv3WZglS6Hjmg7FHAaJWgWAhrskagw4fQ==",
+      "type": "package",
+      "path": "ravendb.testdriver/4.0.6",
+      "files": [
+        "lib/net461/Raven.TestDriver.dll",
+        "lib/netstandard1.3/Raven.TestDriver.dll",
+        "lib/netstandard2.0/Raven.TestDriver.dll",
+        "ravendb.testdriver.4.0.6.nupkg.sha512",
+        "ravendb.testdriver.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -8665,15 +9016,21 @@
         "system.runtime.interopservices.runtimeinformation.nuspec"
       ]
     },
-    "System.Runtime.Loader/4.0.0": {
-      "sha512": "4UN78GOVU/mbDFcXkEWtetJT/sJ0yic2gGk1HSlSpWI0TDf421xnrZTDZnwNBapk1GQeYN7U1lTj/aQB1by6ow==",
+    "System.Runtime.Loader/4.3.0": {
+      "sha512": "DHMaRn8D8YCK2GG2pw+UzNxn/OHVfaWx7OTLBD/hPegHZZgcZh3H6seWegrC4BYwsfuGrywIuT+MQs+rPqRLTQ==",
       "type": "package",
-      "path": "system.runtime.loader/4.0.0",
+      "path": "system.runtime.loader/4.3.0",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
         "lib/net462/_._",
         "lib/netstandard1.5/System.Runtime.Loader.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
         "ref/netstandard1.5/System.Runtime.Loader.dll",
         "ref/netstandard1.5/System.Runtime.Loader.xml",
         "ref/netstandard1.5/de/System.Runtime.Loader.xml",
@@ -8685,7 +9042,7 @@
         "ref/netstandard1.5/ru/System.Runtime.Loader.xml",
         "ref/netstandard1.5/zh-hans/System.Runtime.Loader.xml",
         "ref/netstandard1.5/zh-hant/System.Runtime.Loader.xml",
-        "system.runtime.loader.4.0.0.nupkg.sha512",
+        "system.runtime.loader.4.3.0.nupkg.sha512",
         "system.runtime.loader.nuspec"
       ]
     },
@@ -9290,6 +9647,37 @@
         "system.security.principal.windows.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "System.Spatial/5.2.0": {
+      "sha512": "HWSjn7sI5sCyCpyiwUk/f8xKAihV0sh+dGPVyJEQsbvvPbkJnm3abgRg4rbQJ32efDH3C/0xoODsgezqdlXPJA==",
+      "type": "package",
+      "path": "system.spatial/5.2.0",
+      "files": [
+        "lib/net40/System.Spatial.dll",
+        "lib/net40/System.Spatial.xml",
+        "lib/net40/de/System.Spatial.resources.dll",
+        "lib/net40/es/System.Spatial.resources.dll",
+        "lib/net40/fr/System.Spatial.resources.dll",
+        "lib/net40/it/System.Spatial.resources.dll",
+        "lib/net40/ja/System.Spatial.resources.dll",
+        "lib/net40/ko/System.Spatial.resources.dll",
+        "lib/net40/ru/System.Spatial.resources.dll",
+        "lib/net40/zh-Hans/System.Spatial.resources.dll",
+        "lib/net40/zh-Hant/System.Spatial.resources.dll",
+        "lib/sl4/System.Spatial.SL.dll",
+        "lib/sl4/System.Spatial.SL.xml",
+        "lib/sl4/de/System.Spatial.SL.resources.dll",
+        "lib/sl4/es/System.Spatial.SL.resources.dll",
+        "lib/sl4/fr/System.Spatial.SL.resources.dll",
+        "lib/sl4/it/System.Spatial.SL.resources.dll",
+        "lib/sl4/ja/System.Spatial.SL.resources.dll",
+        "lib/sl4/ko/System.Spatial.SL.resources.dll",
+        "lib/sl4/ru/System.Spatial.SL.resources.dll",
+        "lib/sl4/zh-Hans/System.Spatial.SL.resources.dll",
+        "lib/sl4/zh-Hant/System.Spatial.SL.resources.dll",
+        "system.spatial.5.2.0.nupkg.sha512",
+        "system.spatial.nuspec"
       ]
     },
     "System.Text.Encoding/4.3.0": {
@@ -10233,6 +10621,17 @@
         "system.xml.xpath.xmldocument.nuspec"
       ]
     },
+    "WindowsAzure.Storage/2.0.0": {
+      "sha512": "UFQbKvGNr8pJfq7dv9pHVdtgWRzXjn201ZVpbgcU4zD5k/AQH6vNZz71G2raK0gVPt0i4UQ1vY3BC+E8s+IR5w==",
+      "type": "package",
+      "path": "windowsazure.storage/2.0.0",
+      "files": [
+        "lib/net40/Microsoft.WindowsAzure.Storage.dll",
+        "lib/net40/Microsoft.WindowsAzure.Storage.xml",
+        "windowsazure.storage.2.0.0.nupkg.sha512",
+        "windowsazure.storage.nuspec"
+      ]
+    },
     "xunit/2.3.1": {
       "sha512": "IWux0xXfZ/bC7SgooK5rmW5KwCwFg9GFslmPxA7+pJsT+2SRyhOfOgNUXDd7B09UN4f6kogRT2TqNi6gbWEspA==",
       "type": "package",
@@ -10356,6 +10755,8 @@
     ".NETCoreApp,Version=v2.1": [
       "Microsoft.NET.Test.Sdk >= 15.7.0",
       "Microsoft.NETCore.App >= 2.1.0",
+      "RavenDB.Database >= 2.5.25033",
+      "RavenDB.TestDriver >= 4.0.6",
       "react >= 1.0.0",
       "xunit >= 2.3.1",
       "xunit.runner.visualstudio >= 2.3.1"
@@ -10414,6 +10815,14 @@
             "version": "[2.1.0, )",
             "autoReferenced": true
           },
+          "RavenDB.Database": {
+            "target": "Package",
+            "version": "[2.5.25033, )"
+          },
+          "RavenDB.TestDriver": {
+            "target": "Package",
+            "version": "[4.0.6, )"
+          },
           "xunit": {
             "target": "Package",
             "version": "[2.3.1, )"
@@ -10430,5 +10839,77 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.CompilerServices.AsyncTargetingPack 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.CompilerServices.AsyncTargetingPack",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.Data.Edm 5.2.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.Data.Edm",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.Data.OData 5.2.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.Data.OData",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.WindowsAzure.ConfigurationManager 1.8.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.WindowsAzure.ConfigurationManager",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'RavenDB.Database 2.5.25033' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "RavenDB.Database",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Spatial 5.2.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "System.Spatial",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'WindowsAzure.Storage 2.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "WindowsAzure.Storage",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    }
+  ]
 }

@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AspNetCore.RouteAnalyzer;
 using Swashbuckle.AspNetCore.Swagger;
+using bigmojo.net.capacity.Interface;
+using bigmojo.net.capacity.Services;
 
 namespace react
 {
@@ -30,6 +32,8 @@ namespace react
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<ICapacity, CapacityService>();
 
             //services.AddSingleton(DocumentStoreHolder.Store);
             // Register the Swagger generator, defining 1 or more Swagger documents

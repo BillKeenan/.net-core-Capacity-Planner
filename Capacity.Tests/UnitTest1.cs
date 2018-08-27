@@ -1,5 +1,5 @@
 using System;
-using bigmojo.net.capacity.api.model;
+using bigmojo.net.capacity.api.Model;
 using react.Controllers;
 using Xunit;
 
@@ -11,8 +11,8 @@ namespace Capacity.Tests
         public void Test1()
         {
             Project project = new Project();
-            project.firstName = "hi";
-            Assert.Equal("hi", project.firstName);
+            project.name = "hi";
+            Assert.Equal("hi", project.name);
             
         }
     }
