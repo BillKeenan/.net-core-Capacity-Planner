@@ -6,131 +6,156 @@ using Raven.Client.Documents.Indexes;
 using Raven.TestDriver;
 using Xunit;
 
-namespace Capacity.Tests{
-public class RavenDBTestDriver : RavenTestDriver<MyRavenDBLocator>
-    {
-        //This allows us to modify the conventions of the store we get from 'GetDocumentStore'
-        protected override void PreInitialize(IDocumentStore documentStore)
-        {
-            documentStore.Conventions.MaxNumberOfRequestsPerSession = 50;
+namespace Capacity.Tests {
+    using System.Linq;
+    using bigmojo.net.capacity.api.Model;
+    using bigmojo.net.capacity.Services;
+    using Raven.Client.Documents.Indexes;
+    using Raven.Client.Documents;
+    using Raven.TestDriver;
+    using Xunit;
+    using Xunit.Sdk;
+
+        
+    public class CapacityServiceTests : RavenTestDriver,IDisposable {
+       
+
+        [Fact]
+        public void CanStoreProjectTest () {
+           
+
+            var sampleProject = new Project { name = "Hello world!" };
+            using (var store = GetDocumentStore ()) {
+
+                var service = new CapacityService (store);
+
+                service.StoreProject (ref sampleProject);
+
+                //WaitForUserToContinueTheTest (store); //Sometimes we want to debug the test itself, this redirect us to the studio
+
+                WaitForIndexing (store);
+                using (var session = store.OpenSession ()) {
+                    var loadedProject = session.Load<Project> (sampleProject.Id);
+                    Assert.NotNull (loadedProject);
+                }
+            }
         }
 
         [Fact]
-        public void MyFirstTest()
-        {
-            using (var store = GetDocumentStore())
-            {
-                store.ExecuteIndex(new TestDocumentByName());
-                using (var session = store.OpenSession())
-                {
-                    session.Store(new TestDocument { Name = "Hello world!" });
-                    session.Store(new TestDocument { Name = "Goodbye..." });
-                    session.SaveChanges();
-                }
-                WaitForIndexing(store); //If we want to query documents sometime we need to wait for the indexes to catch up
-                WaitForUserToContinueTheTest(store);//Sometimes we want to debug the test itself, this redirect us to the studio
-                using (var session = store.OpenSession())
-                {
-                    var query = session.Query<TestDocument, TestDocumentByName>().Where(x => x.Name == "hello").ToList();
-                    Assert.Single(query);
+        public void CanStorePersonTest () {
+          
+
+            var samplePerson = new Person { firstName = "bob" };
+            using (var store = GetDocumentStore ()) {
+
+                var service = new CapacityService (store);
+
+                service.StorePerson (ref samplePerson);
+                //WaitForUserToContinueTheTest (store); //Sometimes we want to debug the test itself, this redirect us to the studio
+
+                WaitForIndexing (store);
+                using (var session = store.OpenSession ()) {
+                    var loadedPerson = session.Load<Person> (samplePerson.Id);
+                    Assert.NotNull (loadedPerson);
                 }
             }
         }
+
+        [Fact]
+        public void CanAssignPersonToWork () {
+        
+
+            var samplePerson = new Person { firstName = "bob" };
+            var sampleProject = new Project { name = "Hello world!" };
+            using (var store = GetDocumentStore ()) {
+
+                using (var session = store.OpenSession ()) {
+                    session.Store (samplePerson);
+                    session.Store (sampleProject);
+                    session.SaveChanges ();
+                    WaitForIndexing (store);
+
+
+                }
+
+                var service = new CapacityService (store);
+
+                service.assignToProject (samplePerson, sampleProject, 2018, 1, 30);
+                WaitForIndexing (store);
+
+                //Sometimes we want to debug the test itself, this redirect us to the studio
+
+                using (var session = store.OpenSession ()) {
+                    //WaitForUserToContinueTheTest (store);
+                    var query =
+                        session.Query<Assignment> ().
+                    Where (x => x.Person.Id == samplePerson.Id && x.Year == 2018);
+                    Assert.Single (query);
+
+                }
+
+            }
+
+            
+        }
+
+
+        [Fact]
+        public void AssigningSecondDoesntDestroyOthers () {
+        
+            var samplePerson = new Person { firstName = "bob" };
+            var sampleProject = new Project { name = "Hello world!" };
+            var sampleProject2 = new Project { name = "Another Project" };
+            using (var store = GetDocumentStore ()) {
+
+                using (var session = store.OpenSession ()) {
+                    session.Store (samplePerson);
+                    session.Store (sampleProject);
+                    session.Store (sampleProject2);
+                    session.SaveChanges ();
+                    WaitForIndexing (store);
+
+
+                }
+
+                var service = new CapacityService (store);
+
+                service.assignToProject (samplePerson, sampleProject, 2018, 1, 30);
+                WaitForIndexing (store);
+                service.assignToProject (samplePerson, sampleProject, 2018, 2, 80);
+                WaitForIndexing (store);
+                service.assignToProject (samplePerson, sampleProject2, 2018, 10, 70);
+                WaitForIndexing (store);
+
+                //Sometimes we want to debug the test itself, this redirect us to the studio
+
+                using (var session = store.OpenSession ()) {
+                    //WaitForUserToContinueTheTest (store);
+                    var query =
+                        session.Query<Assignment> ().
+                    Where (x => x.Person.Id == samplePerson.Id && x.Year == 2018);
+                    Assert.Equal (1,query.Count());
+                    Assert.Equal(30,query.First().Assignments[sampleProject.Id][1]);
+                    Assert.Equal(80,query.First().Assignments[sampleProject.Id][2]);
+                    Assert.Equal(70,query.First().Assignments[sampleProject2.Id][10]);
+
+                }
+
+            }
+
+            
+        }
+
     }
 
-    public class MyRavenDBLocator : RavenServerLocator
-    {
-        private string _serverPath = "/Applications/RavenDB/Server/Raven.Server.dll";
-        private string _command = "dotnet";
-        private readonly string RavenServerName = "Raven.Server";
-        private string _arguments;
-
-        public override string ServerPath
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_serverPath) == false)
-                {
-                    return _serverPath;
-                }
-                var path = Environment.GetEnvironmentVariable("RavenServerTestPath");
-                if (string.IsNullOrEmpty(path) == false)
-                {
-                    if (InitializeFromPath(path))
-                        return _serverPath;
-                }
-                //If we got here we didn't have ENV:RavenServerTestPath setup for us maybe this is a CI enviroement
-                path = Environment.GetEnvironmentVariable("RavenServerCIPath");
-                if (string.IsNullOrEmpty(path) == false)
-                {
-                    if (InitializeFromPath(path))
-                        return _serverPath;
-                }
-                //We couldn't find Raven.Server in either enviroment variables lets look for it in the current directory
-                foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, $"{RavenServerName}.exe; {RavenServerName}.dll"))
-                {
-                    if (InitializeFromPath(file))
-                        return _serverPath;
-                }
-                //Lets try some brut force
-                foreach (var file in Directory.GetFiles(Directory.GetDirectoryRoot(Environment.CurrentDirectory), $"{RavenServerName}.exe; {RavenServerName}.dll", SearchOption.AllDirectories))
-                {
-                    if (InitializeFromPath(file))
-                    {
-                        try
-                        {
-                            //We don't want to override the variable if defined
-                            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RavenServerTestPath")))
-                                Environment.SetEnvironmentVariable("RavenServerTestPath", file);
-                        }
-                        //We might not have permissions to set the enviroment variable
-                        catch
-                        {
-
-                        }
-                        return _serverPath;
-                    }
-                }
-                throw new FileNotFoundException($"Could not find {RavenServerName} anywhere on the device.");
-            }
-        }
-
-        private bool InitializeFromPath(string path)
-        {
-            if (Path.GetFileNameWithoutExtension(path) != RavenServerName)
-                return false;
-            var ext = Path.GetExtension(path);
-            if (ext == ".dll")
-            {
-                _serverPath = path;
-                _arguments = _serverPath;
-                return true;
-            }
-            if (ext == ".exe")
-            {
-                _serverPath = path;
-                _command = _serverPath;
-                _arguments = string.Empty;
-                return true;
-            }
-            return false;
-        }
-
-        public override string Command => _command;
-        public override string CommandArguments => _arguments;
-    }
-
-    public class TestDocumentByName : AbstractIndexCreationTask<TestDocument>
-    {
-        public TestDocumentByName()
-        {
+    public class TestDocumentByName : AbstractIndexCreationTask<TestDocument> {
+        public TestDocumentByName () {
             Map = docs => from doc in docs select new { doc.Name };
-            Indexes.Add(x => x.Name, FieldIndexing.Search);
+            Indexes.Add (x => x.Name, FieldIndexing.Search);
         }
     }
 
-    public class TestDocument
-    {
+    public class TestDocument {
         public string Name { get; set; }
     }
 }

@@ -76,7 +76,15 @@ export class Project extends Component {
 
 
   handleSubmit(event) {
-    alert('A project was submitted: ' + this.state.input.firstName + ':' + this.state.input.lastName);
+
+    this.setState(state => ({
+      ...state,
+      projects: {
+        ...state.projects,
+        ...{name:this.state.input.name}
+      }
+    }))
+
     event.preventDefault();
     fetch('api/Project', {
       method: 'POST',
