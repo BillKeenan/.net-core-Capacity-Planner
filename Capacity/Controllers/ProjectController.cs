@@ -16,9 +16,11 @@ namespace react.Controllers {
     [Route ("api/[controller]")]
     public class ProjectController : Controller {
         private readonly ICapacity capcityService;
+        private readonly IDocumentStore store;
 
-        public ProjectController(ICapacity capcityService){
+        public ProjectController(ICapacity capcityService,IDocumentStoreHolder storeHolder){
             this.capcityService = capcityService;
+            this.store = storeHolder.Store;
         }
         [HttpGet]
         public ActionResult<ProjectViewModel[]> GetProjects () {
@@ -27,7 +29,7 @@ namespace react.Controllers {
 
             try {
                 // Each DocumentStore needs to be initialized before use.
-                using (IDocumentSession session = DocumentStoreHolder.Store.OpenSession ()) // Open a session for a default 'Database'
+                using (IDocumentSession session = store.OpenSession ()) // Open a session for a default 'Database'
                 {
 
                     List<Project> projectsx = session

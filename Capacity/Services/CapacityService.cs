@@ -9,8 +9,8 @@ namespace bigmojo.net.capacity.Services {
     public class CapacityService : ICapacity {
         private IDocumentStore store;
 
-        public CapacityService (IDocumentStore store) {
-            this.store = store;
+        public CapacityService (IDocumentStoreHolder storeHolder) {
+            this.store = storeHolder.Store;
         }
 
         //Load the capacity % for an individual project, on week# for a certain # of weeks

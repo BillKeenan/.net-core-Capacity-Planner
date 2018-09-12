@@ -19,6 +19,7 @@ namespace bigmojo.net.capacity.api.Model {
         public Dictionary<string, int[]> Assignments { get => _assignments; }
 
         internal void addAssignment (Project project, int week, int percentage) {
+
             if (! Assignments.ContainsKey(project.Id)){
                 Assignments[project.Id] = new int[52];
             }

@@ -1,19 +1,24 @@
 using System;
+using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
 
 namespace bigmojo.net.capacity.Services {
-    public class DocumentStoreHolder {
-        private static Lazy<IDocumentStore> store = new Lazy<IDocumentStore> (CreateStore);
+    public class DocumentStoreHolder : IDocumentStoreHolder {
+        public DocumentStoreHolder (IOptions<RavenSettings> ravenSettings) {
+            var settings = ravenSettings.Value;
 
-        public static IDocumentStore Store => store.Value;
+            Store = new DocumentStore {
 
-        private static IDocumentStore CreateStore () {
-            IDocumentStore store = new DocumentStore () {
-                Urls = new [] { "http://localhost:8080" },
-                    Database = "capacity"
+                Urls =  new string[] {settings.Url},
+                Database = settings.DefaultDatabase
             }.Initialize ();
-
-            return store;
         }
+
+        public IDocumentStore Store { get; }
+    }
+
+    public class RavenSettings {
+        public string Url { get; set; }
+        public string DefaultDatabase { get; set; }
     }
 }

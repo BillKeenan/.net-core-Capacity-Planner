@@ -7,12 +7,18 @@ using bigmojo.net.capacity.api.Model;
 using bigmojo.net.capacity.api.ViewModel;
 using Raven.Client.Documents.Session;
 using bigmojo.net.capacity.Services;
+using Raven.Client.Documents;
 
 namespace react.Controllers
 {
     [Route("api/[controller]")]
     public class PersonController : Controller
     {
+        private readonly IDocumentStore store;
+
+        public PersonController(IDocumentStoreHolder storeHolder){
+            this.store = storeHolder.Store;
+        }
 
 
         [HttpGet]
@@ -29,7 +35,7 @@ namespace react.Controllers
                 Person modelModel = personViewModel;
 
                 // Each DocumentStore needs to be initialized before use.
-                using (IDocumentSession session = DocumentStoreHolder.Store.OpenSession ()) // Open a session for a default 'Database'
+                using (IDocumentSession session = store.OpenSession ()) // Open a session for a default 'Database'
                 {
 
                     session.Store (modelModel); // Assign an 'Id' and collection (Categories)

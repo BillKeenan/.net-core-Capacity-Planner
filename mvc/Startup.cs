@@ -31,9 +31,19 @@ namespace mvc
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-xxxx
-af
             services.AddScoped<ICapacity, CapacityService>();
+
+            services.AddOptions();
+
+            // App Settings
+            services.Configure<RavenSettings>(Configuration.GetSection("Raven"));
+            //services.Configure<RavenSettings>(settings => Configuration.GetSection("Raven").Bind(settings));
+
+            // .NET core built in IOC
+            services.AddSingleton(DocumentStoreHolder.Store);
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
