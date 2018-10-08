@@ -213,7 +213,10 @@ export class CapacityHeader extends Component {
     }
     return (
       this.state.capacity.map(function (d, idx) {
-        return <td>{d}</td>
+        return <td>{new Intl.DateTimeFormat('en-GB', { 
+          month: 'short', 
+          day: 'numeric' 
+        }).format(new Date(d))}</td>
       }, this)
     );
   }

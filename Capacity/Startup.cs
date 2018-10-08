@@ -33,6 +33,11 @@ namespace react
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.Configure<RavenSettings>(Configuration.GetSection("Raven"));
+            //services.Configure<RavenSettings>(settings => Configuration.GetSection("Raven").Bind(settings));
+
+            // .NET core built in IOC
+            services.AddScoped<IDocumentStoreHolder, DocumentStoreHolder>();
             services.AddScoped<ICapacity, CapacityService>();
 
             //services.AddSingleton(DocumentStoreHolder.Store);

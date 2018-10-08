@@ -24,7 +24,7 @@ namespace Capacity.Tests {
 
                 mockHolder.SetupGet(x=> x.Store).Returns(GetDocumentStore());
 
-                return mockHolder.Object;
+                return mockHolder.Object;   
        }
 
         [Fact]
